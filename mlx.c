@@ -42,4 +42,6 @@ void	initialisation_minilibix(t_map *map)
 	map->mlx->windows = mlx_new_window(map->mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "mlx_42");
 	map->mlx->image = mlx_new_image(map->mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	map->mlx->data = mlx_get_data_addr(map->mlx->image, &map->mlx->bpp, &map->mlx->size_line, &map->mlx->endian);
+
+
 }

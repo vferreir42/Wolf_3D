@@ -17,14 +17,15 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
+#include <fcntl.h>
 
-# define SCREEN_WIDTH 320
-# define SCREEN_HEIGHT 200
+
+# define SCREEN_WIDTH 1920
+# define SCREEN_HEIGHT 1080
 # define PI 3.14159265
-# define DISTANCE 277
+# define DISTANCE 1000
 # define SIZE 64
-
-
+# define VITESSE 16
 
 #include <stdio.h>
 
@@ -45,13 +46,16 @@ typedef struct	s_map
 {
 	t_mlx *mlx;
 	int			key_hook[300];
+	char **carte;
 	double pos_x;
 	double pos_y;
-	double angle;
+	int angle;
 	int carte_x;
 	int carte_y;
 }				         t_map;
 
+void bonus(t_map *map);
+int take_map(t_map *map, char *name);
 void 			test(t_map *map);
 int				motion_hook(int x, int y, t_map *map);
 void			initialisation_minilibix(t_map *map);
@@ -60,3 +64,6 @@ void			ft_clean_image(t_map *map);
 int				my_key_funct(int keycode, t_map *map);
 int				my_mouse_funct(int keycode, int pos_x, int pos_y, t_map *map);
 void draw_colonne(t_mlx *mlx, int colonne, int i);
+void	set_value(t_map *map);
+int			fct_key(int keycode, t_map *map);
+int do_change(t_map *map);

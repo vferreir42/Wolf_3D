@@ -16,7 +16,8 @@ SRCS	=	./main.c 								\
 				./mlx.c									\
 				./key_fonction.c				\
 				./display.c							\
-				./calcul.c
+				./calcul.c							\
+				./take_map.c
 
 
 OBJS	=	$(SRCS:.c=.o)

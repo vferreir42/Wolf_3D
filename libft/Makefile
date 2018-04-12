@@ -77,7 +77,8 @@ SRC		= ft_atoi.c			\
 		  ft_lstadd.c		\
 		  ft_lstiter.c		\
 		  ft_lstmap.c		\
-		  ft_lstnew.c
+		  ft_lstnew.c		\
+			get_next_line.c
 
 OBJ		= $(SRC:.c=.o)
 
