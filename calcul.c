@@ -103,8 +103,10 @@ void test(t_map *map)
 {
   int i;
   int colonne;
-	double dist_hor;
-	double dist_ver;
+	double dist_hor = -1;
+	double dist_ver = -1;
+
+
 
   map->angle %= 360;
 	i = -1;
@@ -115,5 +117,5 @@ void test(t_map *map)
 		colonne = size_colonne(dist_hor, dist_ver);
 		draw_colonne(map->mlx, colonne, i);
 	}
-	bonus(map);
+	mini_map(map);
 }

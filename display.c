@@ -23,10 +23,12 @@ void draw_colonne(t_mlx *mlx, int colonne, int i)
     ft_put_pixel(mlx, i, SCREEN_HEIGHT / 2 - x, 0xFFFFFF);
     x++;
   }
-  while (x < SCREEN_HEIGHT)
+
+  while (x <= SCREEN_HEIGHT)
   {
-    ft_put_pixel(mlx, i, SCREEN_HEIGHT / 2 + x, 0xB3B191);
+//    ft_put_pixel(mlx, i, SCREEN_HEIGHT / 2 + x, 0xB3B191);
     ft_put_pixel(mlx, i, SCREEN_HEIGHT / 2 - x, 0x00BFFF);
     x++;
   }
+
 }

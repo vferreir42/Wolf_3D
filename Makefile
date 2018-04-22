@@ -17,7 +17,8 @@ SRCS	=	./main.c 								\
 				./key_fonction.c				\
 				./display.c							\
 				./calcul.c							\
-				./take_map.c
+				./take_map.c						\
+				./mini_map.c
 
 
 OBJS	=	$(SRCS:.c=.o)
@@ -26,14 +27,14 @@ CC	=	@gcc
 
 CFLAGS	=	-I ./libft/includes
 
-LIB_PATH	=	./libft/libft.a
+LIB_PATH	=	./libft/libft.a ./minilibx_macos/libmlx.a
 
 RM	=	/bin/rm -f
 
 all	:	$(NAME)
 
 $(NAME)	:	$(OBJS)
-	@$(CC) $(OBJS) $(LIB_PATH) -o $(NAME) -lmlx -framework OpenGL -framework AppKit
+	@$(CC) $(OBJS) $(LIB_PATH) -o $(NAME) -framework OpenGL -framework AppKit
 	@echo "\033[32mWOLF 3D COMPILATING DONE\033[0m"
 	@$(RM) $(OBJS)
 

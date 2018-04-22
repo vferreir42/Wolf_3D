@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 # include "mlx_keycode.h"
-# include "mlx.h"
+# include "minilibx_macos/mlx.h"
 # include "libft.h"
 # include <stdlib.h>
 # include <stdlib.h>
@@ -20,12 +20,13 @@
 #include <fcntl.h>
 
 
-# define SCREEN_WIDTH 1920
-# define SCREEN_HEIGHT 1080
+# define SCREEN_WIDTH 1280
+# define SCREEN_HEIGHT 720
 # define PI 3.14159265
-# define DISTANCE 1000
+# define DISTANCE 277
 # define SIZE 64
-# define VITESSE 16
+# define VITESSE 8
+# define ROTATION 4
 
 #include <stdio.h>
 
@@ -54,7 +55,7 @@ typedef struct	s_map
 	int carte_y;
 }				         t_map;
 
-void bonus(t_map *map);
+void mini_map(t_map *map);
 int take_map(t_map *map, char *name);
 void 			test(t_map *map);
 int				motion_hook(int x, int y, t_map *map);

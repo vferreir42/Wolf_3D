@@ -37,9 +37,9 @@ int			fct_key(int keycode, t_map *map)
 int do_change(t_map *map)
 {
 	if (map->key_hook[RIGHT_KEY])
-		map->angle -= 10;
+		map->angle -= ROTATION;
 	else if (map->key_hook[LEFT_KEY])
-		map->angle += 10;
+		map->angle += ROTATION;
 	else if (map->key_hook[UP_KEY])
 	{
 		map->angle %= 360;
