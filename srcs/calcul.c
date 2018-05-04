@@ -6,7 +6,7 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 18:19:08 by vferreir          #+#    #+#             */
-/*   Updated: 2018/04/11 18:01:31 by vferreir         ###   ########.fr       */
+/*   Updated: 2018/05/04 17:57:09 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,19 @@ static double size_colonne(double dist_hor, double dist_ver)
 		return ((DISTANCE * 64) / dist_ver);
 	if (dist_ver == -1)
 		return ((DISTANCE * 64) / dist_hor);
-	if (dist_hor >= dist_ver)
+	if (dist_hor > dist_ver)
 		return ((DISTANCE * 64) / dist_ver);
 	else
 		return ((DISTANCE * 64) / dist_hor);
+}
+
+double modulo_xbox(double angle)
+{
+	double rest;
+
+	rest = angle - (int)angle;
+	angle = (int)angle % 360 + rest;
+	return (angle);
 }
 
 static double distance_horizontale(t_map *map, char **carte, double angle)
@@ -33,6 +42,7 @@ static double distance_horizontale(t_map *map, char **carte, double angle)
 	double y_a;
 	double x_a;
 
+	angle = modulo_xbox(angle);
 	if ((angle >= 0 && angle <= 180) || angle <= -180)
 		y1 = (floor(map->pos_y / SIZE) * 64) - 1;
 	else
@@ -69,6 +79,7 @@ static double distance_verticale(t_map *map, char **carte, double angle)
 	double y_a;
 	double x_a;
 
+	angle = modulo_xbox(angle);
 	if ((angle >= 90 && angle <= 270) || (angle <= -90 && angle >= -270))
 		x1 = (floor(map->pos_x / SIZE) * 64) - 1;
 	else
@@ -85,7 +96,6 @@ static double distance_verticale(t_map *map, char **carte, double angle)
 	{
 		if (y1 == -1)
 			y1 = map->pos_y + (map->pos_x - x1) * tan(angle * PI / 180);
-
 		if (floor(y1 / 64) >= 0 && floor(y1 / 64) < map->carte_y
 				&& floor(x1 / 64) >= 0 && floor(x1 / 64) < map->carte_x)
 		{
@@ -101,14 +111,12 @@ static double distance_verticale(t_map *map, char **carte, double angle)
 
 void test(t_map *map)
 {
-  int i;
-  int colonne;
+	int i;
+	int colonne;
 	double dist_hor = -1;
 	double dist_ver = -1;
 
-
-
-  map->angle %= 360;
+	map->angle %= 360;
 	i = -1;
 	while (++i < SCREEN_WIDTH)
 	{

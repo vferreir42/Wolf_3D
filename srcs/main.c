@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 		take_map(map, argv[1]);
 
 	initialisation_minilibix(map);
-	map->pos_x = 96;
+	map->pos_x = 160;
 	map->pos_y = 224;
 	map->angle = 60;
 

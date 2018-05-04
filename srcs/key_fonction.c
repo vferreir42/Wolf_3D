@@ -45,12 +45,22 @@ int do_change(t_map *map)
 		map->angle %= 360;
 		map->pos_x += cos(map->angle * PI / 180) * VITESSE;
 		map->pos_y -= sin(map->angle * PI / 180) * VITESSE;
+		if (map->carte[(int)map->pos_y / 64][(int)map->pos_x / 64] == '1')
+		{
+			map->pos_x -= cos(map->angle * PI / 180) * VITESSE;
+			map->pos_y += sin(map->angle * PI / 180) * VITESSE;
+		}
 	}
 	else if (map->key_hook[DOWN_KEY])
 	{
 		map->angle %= 360;
 		map->pos_x -= cos(map->angle * PI / 180) * VITESSE;
 		map->pos_y += sin(map->angle * PI / 180) * VITESSE;
+		if (map->carte[(int)map->pos_y / 64][(int)map->pos_x / 64] == '1')
+		{
+			map->pos_x += cos(map->angle * PI / 180) * VITESSE;
+			map->pos_y -= sin(map->angle * PI / 180) * VITESSE;
+		}
 	}
 	else
 		return (0);
