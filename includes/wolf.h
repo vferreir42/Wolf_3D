@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 # include "mlx_keycode.h"
-# include "minilibx_macos/mlx.h"
+# include "mlx.h"
 # include "libft.h"
 # include <stdlib.h>
 # include <stdlib.h>

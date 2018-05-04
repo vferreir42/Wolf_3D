@@ -12,20 +12,20 @@
 
 NAME	=	./test
 
-SRCS	=	./main.c 								\
-				./mlx.c									\
-				./key_fonction.c				\
-				./display.c							\
-				./calcul.c							\
-				./take_map.c						\
-				./mini_map.c
+SRCS	=	./srcs/main.c 						\
+				./srcs/mlx.c							\
+				./srcs/key_fonction.c			\
+				./srcs/display.c					\
+				./srcs/calcul.c						\
+				./srcs/take_map.c					\
+				./srcs/mini_map.c
 
 
 OBJS	=	$(SRCS:.c=.o)
 
 CC	=	@gcc
 
-CFLAGS	=	-I ./libft/includes
+CFLAGS	=	-I ./libft/includes -I ./includes -I ./minilibx_macos
 
 LIB_PATH	=	./libft/libft.a ./minilibx_macos/libmlx.a
 
