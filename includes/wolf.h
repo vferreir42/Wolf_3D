@@ -23,9 +23,10 @@
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
 # define PI 3.14159265
-# define DISTANCE 277
+# define DEGREE 3.14159265 / 180
+# define DISTANCE 1108
 # define SIZE 64
-# define VITESSE 8
+# define VITESSE 16
 # define ROTATION 4
 
 #include <stdio.h>
@@ -55,6 +56,20 @@ typedef struct	s_map
 	int carte_y;
 }				         t_map;
 
+typedef struct s_v
+{
+	double angle;
+	double pos_x;
+	double pos_y;
+	double step_x;
+	double step_y;
+	int		up;
+	int		bottom;
+	int		right;
+	int		left;
+}								t_v;
+
+
 void mini_map(t_map *map);
 int take_map(t_map *map, char *name);
 void 			test(t_map *map);
@@ -64,7 +79,7 @@ void			ft_put_pixel(t_mlx *mlx, int x, int y, int couleur);
 void			ft_clean_image(t_map *map);
 int				my_key_funct(int keycode, t_map *map);
 int				my_mouse_funct(int keycode, int pos_x, int pos_y, t_map *map);
-void draw_colonne(t_mlx *mlx, int colonne, int i);
+void draw_colonne(t_v *v, t_mlx *mlx, int colonne, int i);
 void	set_value(t_map *map);
 int			fct_key(int keycode, t_map *map);
 int do_change(t_map *map);

@@ -36,31 +36,34 @@ int			fct_key(int keycode, t_map *map)
 
 int do_change(t_map *map)
 {
+	double x;
+	double y;
+
 	if (map->key_hook[RIGHT_KEY])
 		map->angle -= ROTATION;
 	else if (map->key_hook[LEFT_KEY])
 		map->angle += ROTATION;
 	else if (map->key_hook[UP_KEY])
 	{
-		map->angle %= 360;
-		map->pos_x += cos(map->angle * PI / 180) * VITESSE;
-		map->pos_y -= sin(map->angle * PI / 180) * VITESSE;
-		if (map->carte[(int)map->pos_y / 64][(int)map->pos_x / 64] == '1')
-		{
-			map->pos_x -= cos(map->angle * PI / 180) * VITESSE;
-			map->pos_y += sin(map->angle * PI / 180) * VITESSE;
-		}
+		x = map->pos_x + cos(map->angle * DEGREE) * VITESSE;
+		y = map->pos_y - sin(map->angle * DEGREE) * VITESSE;
+		if (x >= 0 && y >= 0 && x / SIZE < map->carte_x && y / SIZE < map->carte_y
+			&& map->carte[(int)(y / SIZE)][(int)(x / SIZE)] == '0')
+			{
+				map->pos_x = x;
+				map->pos_y = y;
+			}
 	}
 	else if (map->key_hook[DOWN_KEY])
 	{
-		map->angle %= 360;
-		map->pos_x -= cos(map->angle * PI / 180) * VITESSE;
-		map->pos_y += sin(map->angle * PI / 180) * VITESSE;
-		if (map->carte[(int)map->pos_y / 64][(int)map->pos_x / 64] == '1')
-		{
-			map->pos_x += cos(map->angle * PI / 180) * VITESSE;
-			map->pos_y -= sin(map->angle * PI / 180) * VITESSE;
-		}
+		x = map->pos_x - cos(map->angle * DEGREE) * VITESSE;
+		y = map->pos_y + sin(map->angle * DEGREE) * VITESSE;
+		if (x >= 0 && y >= 0 && x / SIZE < map->carte_x && y / SIZE < map->carte_y
+			&& map->carte[(int)(y / SIZE)][(int)(x / SIZE)] == '0')
+			{
+				map->pos_x = x;
+				map->pos_y = y;
+			}
 	}
 	else
 		return (0);

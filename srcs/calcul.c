@@ -12,105 +12,106 @@
 
 #include "wolf.h"
 
-static double size_colonne(double dist_hor, double dist_ver)
-{
-	if (dist_hor == -1 && dist_ver == -1)
-		return (-1);
-	if (dist_hor == -1)
-		return ((DISTANCE * 64) / dist_ver);
-	if (dist_ver == -1)
-		return ((DISTANCE * 64) / dist_hor);
-	if (dist_hor > dist_ver)
-		return ((DISTANCE * 64) / dist_ver);
-	else
-		return ((DISTANCE * 64) / dist_hor);
-}
-
 double modulo_xbox(double angle)
 {
 	double rest;
 
 	rest = angle - (int)angle;
 	angle = (int)angle % 360 + rest;
+	if (angle < 0)
+		angle += 360;
 	return (angle);
 }
 
-static double distance_horizontale(t_map *map, char **carte, double angle)
+static int size_colonne(t_v *v, double dist_hor, double dist_ver)
 {
-	double x1;
-	double y1;
-	double y_a;
-	double x_a;
-
-	angle = modulo_xbox(angle);
-	if ((angle >= 0 && angle <= 180) || angle <= -180)
-		y1 = (floor(map->pos_y / SIZE) * 64) - 1;
-	else
-		y1 = (floor(map->pos_y / SIZE) * 64) + 64;
-
-	x1 = -1;
-	if ((angle >= 0 && angle <= 180) || angle <= -180)
-		y_a = -64;
-	else
-		y_a = 64;
-	x_a = -y_a / tan(angle * PI / 180);
-
-	while (1)
+	v->up = 0;
+	v->bottom = 0;
+	v->right = 0;
+	v->left = 0;
+	if (dist_hor)
+		dist_hor = (DISTANCE * SIZE) / dist_hor;
+	if (dist_ver)
+		dist_ver = (DISTANCE * SIZE) / dist_ver;
+	if (dist_hor > dist_ver)
 	{
-		if (x1 == -1)
-			x1 = map->pos_x + (map->pos_y - y1) / tan(angle * PI / 180);
-		if (floor(y1 / 64) >= 0 && floor(y1 / 64) < map->carte_y
-				&& floor(x1 / 64) >= 0 && floor(x1 / 64) < map->carte_x)
-		{
-			if (carte[(int)floor(y1 / 64)][(int)floor(x1 / 64)] == '1')
-				return (fabs((map->pos_x - x1) / cos(angle * PI / 180)) * cos((angle - map->angle) * PI / 180));
-		}
+		if (v->angle < 180)
+			v->up = 1;
 		else
-			return (-1);
-		y1 += y_a;
-		x1 += x_a;
+			v->bottom = 1;
+		return ((int)dist_hor);
+	}
+	else
+	{
+		if (v->angle >= 90 && v->angle <= 270)
+			v->right = 1;
+		else
+			v->left = 1;
+		return ((int)dist_ver);
 	}
 }
 
-static double distance_verticale(t_map *map, char **carte, double angle)
+static double distance_horizontale(t_v *v, t_map *map, char **carte)
 {
 	double x1;
 	double y1;
-	double y_a;
-	double x_a;
 
-	angle = modulo_xbox(angle);
-	if ((angle >= 90 && angle <= 270) || (angle <= -90 && angle >= -270))
-		x1 = (floor(map->pos_x / SIZE) * 64) - 1;
+	if (v->angle >= 0 && v->angle <= 180)
+	{
+		y1 = (floor(map->pos_y / SIZE) * 64) - 0.0001;
+		v->step_y = -64;
+	}
 	else
-		x1 = (floor(map->pos_x / SIZE) * 64) + 64;
-
-	y1 = -1;
-	if ((angle >= 90 && angle <= 270) || (angle <= -90 && angle >= -270))
-		x_a = -64;
-	else
-		x_a = 64;
-	y_a = -x_a * tan(angle * PI / 180);
-
+	{
+		y1 = (floor(map->pos_y / SIZE) * 64) + 64;
+		v->step_y = 64;
+	}
+	v->step_x = -v->step_y / tan(v->angle * DEGREE);
+	x1 = map->pos_x + (map->pos_y - y1) / tan(v->angle * DEGREE);
 	while (1)
 	{
-		if (y1 == -1)
-			y1 = map->pos_y + (map->pos_x - x1) * tan(angle * PI / 180);
-		if (floor(y1 / 64) >= 0 && floor(y1 / 64) < map->carte_y
-				&& floor(x1 / 64) >= 0 && floor(x1 / 64) < map->carte_x)
-		{
-			if (carte[(int)floor(y1 / 64)][(int)floor(x1 / 64)] == '1')
-				return (fabs((map->pos_x - x1) / cos(angle * PI / 180)) * cos((angle - map->angle) * PI / 180));
-		}
-		else
-			return (-1);
-		y1 += y_a;
-		x1 += x_a;
+		if (floor(y1 / 64) < 0 || floor(y1 / 64) >= map->carte_y
+				|| floor(x1 / 64) < 0 || floor(x1 / 64) >= map->carte_x)
+			return (0);
+		else if (carte[(int)(y1 / 64)][(int)(x1 / 64)] == '1')
+				return (fabs((map->pos_x - x1) / cos(v->angle * DEGREE)) * cos((v->angle - map->angle) * DEGREE));
+		y1 += v->step_y;
+		x1 += v->step_x;
+	}
+}
+
+static double distance_verticale(t_v *v, t_map *map, char **carte)
+{
+	double x1;
+	double y1;
+
+	if (v->angle >= 90 && v->angle <= 270)
+	{
+		x1 = (floor(map->pos_x / SIZE) * 64) - 0.0001;
+		v->step_x = -64;
+	}
+	else
+	{
+		x1 = (floor(map->pos_x / SIZE) * 64) + 64;
+		v->step_x = 64;
+	}
+	v->step_y = -v->step_x * tan(v->angle * DEGREE);
+	y1 = map->pos_y + (map->pos_x - x1) * tan(v->angle * DEGREE);
+	while (1)
+	{
+		if (floor(y1 / 64) < 0 || floor(y1 / 64) >= map->carte_y
+				|| floor(x1 / 64) < 0 || floor(x1 / 64) >= map->carte_x)
+			return (0);
+		else if (carte[(int)(y1 / 64)][(int)(x1 / 64)] == '1')
+				return (fabs((map->pos_x - x1) / cos(v->angle * DEGREE)) * cos((v->angle - map->angle) * DEGREE));
+		y1 += v->step_y;
+		x1 += v->step_x;
 	}
 }
 
 void test(t_map *map)
 {
+	t_v v;
 	int i;
 	int colonne;
 	double dist_hor = -1;
@@ -120,10 +121,11 @@ void test(t_map *map)
 	i = -1;
 	while (++i < SCREEN_WIDTH)
 	{
-		dist_hor = distance_horizontale(map, map->carte, map->angle + 30 - (double)i * 60 / SCREEN_WIDTH);
-		dist_ver = distance_verticale(map, map->carte, map->angle + 30 - (double)i * 60 / SCREEN_WIDTH);
-		colonne = size_colonne(dist_hor, dist_ver);
-		draw_colonne(map->mlx, colonne, i);
+		v.angle = modulo_xbox(map->angle + 30 - (double)i * 60 / SCREEN_WIDTH);
+		dist_hor = distance_horizontale(&v, map, map->carte);
+		dist_ver = distance_verticale(&v, map, map->carte);
+		colonne = size_colonne(&v, dist_hor, dist_ver);
+		draw_colonne(&v, map->mlx, colonne, i);
 	}
 	mini_map(map);
 }
