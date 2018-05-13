@@ -12,7 +12,7 @@
 
 #include "wolf.h"
 
-void draw_colonne(t_v *v, t_mlx *mlx, int colonne, int i)
+void draw_colonne(t_v *v, t_map *map, int colonne, int i)
 {
 	int x;
 	int couleur;
@@ -26,16 +26,16 @@ void draw_colonne(t_v *v, t_mlx *mlx, int colonne, int i)
 		couleur = 0xA4405B;
 	if (v->left == 1)
 		couleur = 0xA44000;
-	while (x < colonne / 2 && x >= 0 && x < SCREEN_HEIGHT)
+	while (x < colonne / 2)
 	{
-		ft_put_pixel(mlx, i, SCREEN_HEIGHT / 2 + x, couleur);
-		ft_put_pixel(mlx, i, SCREEN_HEIGHT / 2 - x, couleur);
+		ft_put_pixel(map->mlx, i, SCREEN_HEIGHT / 2 + x + map->hauteur, couleur);
+		ft_put_pixel(map->mlx, i, SCREEN_HEIGHT / 2 - x + map->hauteur, couleur);
 		x++;
 	}
-	while (SCREEN_HEIGHT / 2 + x < SCREEN_HEIGHT && SCREEN_HEIGHT / 2 - x >= 0)
+	while (x < SCREEN_HEIGHT)
 	{
-		ft_put_pixel(mlx, i, SCREEN_HEIGHT / 2 + x, 0xB3B191);
-		ft_put_pixel(mlx, i, SCREEN_HEIGHT / 2 - x, 0x00BFFF);
+		ft_put_pixel(map->mlx, i, SCREEN_HEIGHT / 2 + x + map->hauteur, 0xB3B191);
+		ft_put_pixel(map->mlx, i, SCREEN_HEIGHT / 2 - x + map->hauteur, 0x00BFFF);
 		x++;
 	}
 }

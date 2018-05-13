@@ -27,9 +27,13 @@ int			fct_key(int keycode, t_map *map)
 		map->key_hook[keycode] = 1;
 	else if (keycode == DOWN_KEY)
 		map->key_hook[keycode] = 1;
-	else if (keycode == RIGHT_KEY)
+	else if (keycode == A_KEY)
 		map->key_hook[keycode] = 1;
-	else if (keycode == LEFT_KEY)
+	else if (keycode == D_KEY)
+		map->key_hook[keycode] = 1;
+	else if (keycode == W_KEY)
+		map->key_hook[keycode] = 1;
+	else if (keycode == S_KEY)
 		map->key_hook[keycode] = 1;
 	return (0);
 }
@@ -39,11 +43,11 @@ int do_change(t_map *map)
 	double x;
 	double y;
 
-	if (map->key_hook[RIGHT_KEY])
+	if (map->key_hook[D_KEY])
 		map->angle -= ROTATION;
-	else if (map->key_hook[LEFT_KEY])
+	else if (map->key_hook[A_KEY])
 		map->angle += ROTATION;
-	else if (map->key_hook[UP_KEY])
+	else if (map->key_hook[W_KEY])
 	{
 		x = map->pos_x + cos(map->angle * DEGREE) * VITESSE;
 		y = map->pos_y - sin(map->angle * DEGREE) * VITESSE;
@@ -54,7 +58,7 @@ int do_change(t_map *map)
 				map->pos_y = y;
 			}
 	}
-	else if (map->key_hook[DOWN_KEY])
+	else if (map->key_hook[S_KEY])
 	{
 		x = map->pos_x - cos(map->angle * DEGREE) * VITESSE;
 		y = map->pos_y + sin(map->angle * DEGREE) * VITESSE;
@@ -65,6 +69,10 @@ int do_change(t_map *map)
 				map->pos_y = y;
 			}
 	}
+	else if (map->key_hook[UP_KEY])
+		map->hauteur += 5;
+	else if (map->key_hook[DOWN_KEY])
+		map->hauteur -= 5;
 	else
 		return (0);
 	ft_clean_image(map);
@@ -77,7 +85,9 @@ int			my_key_funct(int keycode, t_map *map)
 {
 	if (keycode == ESC_KEY)
 		exit(0);
-	if (keycode == UP_KEY || keycode == DOWN_KEY || keycode == LEFT_KEY || keycode == RIGHT_KEY)
+	if (keycode == UP_KEY || keycode == DOWN_KEY
+		|| keycode == A_KEY || keycode == D_KEY
+		|| keycode == W_KEY || keycode == S_KEY)
 		map->key_hook[keycode] = 0;
 	return (0);
 }

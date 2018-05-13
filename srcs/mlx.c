@@ -26,7 +26,7 @@ void	ft_put_pixel(t_mlx *mlx, int x, int y, int couleur)
 	int	g;
 	int	b;
 
-	if (y > SCREEN_HEIGHT || y < 0 || x < 0 || x > SCREEN_WIDTH)
+	if (y >= SCREEN_HEIGHT || y <= 0 || x < 0 || x > SCREEN_WIDTH)
 		return ;
 	r = (couleur & 16711680) >> 16;
 	g = (couleur & 65280) >> 8;
