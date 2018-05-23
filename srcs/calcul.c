@@ -127,5 +127,5 @@ void test(t_map *map)
 		colonne = size_colonne(&v, dist_hor, dist_ver);
 		draw_colonne(&v, map, colonne, i);
 	}
-	mini_map(map);
+//	mini_map(map);
 }

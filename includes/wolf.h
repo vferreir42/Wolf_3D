@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
+# include <time.h>
+
 #include <fcntl.h>
 
 
@@ -26,7 +28,7 @@
 # define DEGREE 3.14159265 / 180
 # define DISTANCE 1108
 # define SIZE 64
-# define VITESSE 16
+# define VITESSE 8
 # define ROTATION 4
 
 #include <stdio.h>
@@ -36,8 +38,6 @@ typedef struct	s_mlx
 	void		*mlx;
 	void		*windows;
 	void		*image;
-	void		*image_menu;
-	char		*data_menu;
 	char		*data;
 	int			endian;
 	int			bpp;
@@ -55,6 +55,12 @@ typedef struct	s_map
 	int angle;
 	int carte_x;
 	int carte_y;
+	int move_d;
+	int move_a;
+	int move_w;
+	int move_s;
+	clock_t last_frame;
+	clock_t next_frame;
 }				         t_map;
 
 typedef struct s_v
@@ -72,7 +78,8 @@ typedef struct s_v
 
 
 void mini_map(t_map *map);
-int take_map(t_map *map, char *name);
+int initialisation_map(t_map *map, char *name);
+int loop_hook(t_map *map);
 void 			test(t_map *map);
 int				motion_hook(int x, int y, t_map *map);
 void			initialisation_minilibix(t_map *map);
@@ -81,6 +88,4 @@ void			ft_clean_image(t_map *map);
 int				my_key_funct(int keycode, t_map *map);
 int				my_mouse_funct(int keycode, int pos_x, int pos_y, t_map *map);
 void draw_colonne(t_v *v, t_map *map, int colonne, int i);
-void	set_value(t_map *map);
 int			fct_key(int keycode, t_map *map);
-int do_change(t_map *map);

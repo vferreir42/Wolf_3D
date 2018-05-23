@@ -17,7 +17,7 @@ SRCS	=	./srcs/main.c 						\
 				./srcs/key_fonction.c			\
 				./srcs/display.c					\
 				./srcs/calcul.c						\
-				./srcs/take_map.c					\
+				./srcs/initialisation_map.c					\
 				./srcs/mini_map.c
 
 

@@ -32,32 +32,23 @@ int main(int argc, char **argv)
 {
 	t_map *map;
 
-	if (argc != 2)
+	if (argc != 2 || !argv[1])
 	{
 		printf("usage: ./wolf_3D <name_map>\n");
 		exit (0);
 	}
 	if (!(map = malloc(sizeof(t_map))))
 		return (0);
-	if (!(map->mlx = malloc(sizeof(t_mlx))))
-		return (0);
-	if (argv[1])
-		take_map(map, argv[1]);
-
+	initialisation_map(map, argv[1]);
 	initialisation_minilibix(map);
-	map->pos_x = 160;
-	map->pos_y = 224;
-	map->angle = 60;
-	map->hauteur = 0;
 
-	test(map);
-	set_value(map);
-
-	mlx_put_image_to_window(map->mlx->mlx, map->mlx->windows, map->mlx->image, 0, 0);
-	mlx_hook(map->mlx->windows, KEYPRESS, 0, &fct_key, map);
-	mlx_loop_hook(map->mlx->mlx, &do_change, map);
+	mlx_do_key_autorepeatoff(map->mlx);
+	mlx_loop_hook(map->mlx->mlx, &loop_hook, map);
+	mlx_hook(map->mlx->windows, KEYPRESS, KEYPRESSMASK, &fct_key, map);
 	mlx_key_hook(map->mlx->windows, &my_key_funct, map);
-	mlx_hook(map->mlx->windows, 6, POINTERMOTIONMASK, &motion_hook, map);
+
+
+//	mlx_hook(map->mlx->windows, 6, POINTERMOTIONMASK, &motion_hook, map);
 	mlx_loop(map->mlx);
 
 	return (0);

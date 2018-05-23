@@ -12,7 +12,7 @@
 
 #include "wolf.h"
 
-int take_map(t_map *map, char *name)
+int initialisation_map(t_map *map, char *name)
 {
 	char *line;
 	char **ret;
