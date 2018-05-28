@@ -33,9 +33,9 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 	t_list	*ptr;
 
 	if (!(ptr = malloc(sizeof(t_list))))
-		return (0);
+		return (NULL);
 	if (!(ptr->content = malloc(content_size)))
-		return (0);
+		return (NULL);
 	if (content != NULL)
 	{
 		ptr->content = ft_memcpy(ptr->content, content, content_size);

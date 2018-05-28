@@ -17,9 +17,6 @@ int			motion_hook(int x, int y, t_map *map)
 	if (x >= 0 && y >= 0 && x <= SCREEN_WIDTH && y <= SCREEN_HEIGHT)
 	{
 		y = (SCREEN_HEIGHT / 2) - y;
-		//x = (SCREEN_WIDTH / 2) - x;
-		//x = x / 200;
-		//map->angle += x;
 		map->hauteur = y;
 	}
 	return (0);

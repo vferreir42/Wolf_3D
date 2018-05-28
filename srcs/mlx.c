@@ -40,11 +40,8 @@ void	initialisation_minilibix(t_map *map)
 	map->mlx->data = mlx_get_data_addr(map->mlx->image, &map->mlx->bpp, &map->mlx->size_line, &map->mlx->endian);
 	map->last_frame = 0;
 	map->next_frame = 0;
-	map->pos_x = 160;
-	map->pos_y = 224;
-	map->angle = 60;
+	map->angle = -60;
 	map->hauteur = 0;
-	map->move = 1;
 	map->move_a = 0;
 	map->move_d = 0;
 	map->move_w = 0;

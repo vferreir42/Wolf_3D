@@ -12,7 +12,7 @@
 
 #include "wolf.h"
 
-double modulo_xbox(double angle)
+static double modulo_xbox(double angle)
 {
 	double rest;
 
