@@ -109,7 +109,7 @@ static double distance_verticale(t_v *v, t_map *map, char **carte)
 	}
 }
 
-void test(t_map *map)
+void calcul_colonne(t_map *map)
 {
 	t_v v;
 	int i;

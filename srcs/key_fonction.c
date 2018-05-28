@@ -14,43 +14,42 @@
 
 void move_w(t_map *map)
 {
+	int tmp;
 	int x;
 	int y;
 
 	x = map->pos_x + cos(map->angle * DEGREE) * VITESSE;
 	y = map->pos_y - sin(map->angle * DEGREE) * VITESSE;
-
-	//if (x >= 0 && y >= 0 && x / SIZE < map->carte_x && y / SIZE < map->carte_y
-	//	&& map->carte[(int)(y / SIZE)][(int)(x / SIZE)] == '0')
-	//{
+	tmp = map->pos_x;
+	if (x >= 0 && x / SIZE < map->carte_x	&& map->carte[(int)map->pos_y / SIZE][(int)(x / SIZE)] == '0')
 		map->pos_x = x;
+	if (y >= 0 && y / SIZE < map->carte_y && map->carte[(int)(y / SIZE)][(int)tmp / SIZE] == '0')
 		map->pos_y = y;
-	//}
-
 }
 
 void move_s(t_map *map)
 {
+	int tmp;
 	int x;
 	int y;
 
 	x = map->pos_x - cos(map->angle * DEGREE) * VITESSE;
 	y = map->pos_y + sin(map->angle * DEGREE) * VITESSE;
-	if (x >= 0 && y >= 0 && x / SIZE < map->carte_x && y / SIZE < map->carte_y
-		&& map->carte[(int)(y / SIZE)][(int)(x / SIZE)] == '0')
-		{
-			map->pos_x = x;
-			map->pos_y = y;
-		}
+	tmp = map->pos_x;
+	if (x >= 0 && x / SIZE < map->carte_x	&& map->carte[(int)map->pos_y / SIZE][(int)(x / SIZE)] == '0')
+		map->pos_x = x;
+	if (y >= 0 && y / SIZE < map->carte_y && map->carte[(int)(y / SIZE)][(int)tmp / SIZE] == '0')
+		map->pos_y = y;
 }
 
 int loop_hook(t_map *map)
 {
 	map->last_frame = clock();
 	if (map->next_frame > map->last_frame)
+	{
 		return (0);
-//	printf("loop_hook\n");
-	map->next_frame = map->last_frame + (CLOCKS_PER_SEC / 40);
+	}
+	map->next_frame = map->last_frame + (CLOCKS_PER_SEC / 30);
 	if (map->move_a)
 		map->angle += ROTATION;
 	if (map->move_d)
@@ -59,14 +58,16 @@ int loop_hook(t_map *map)
 		move_w(map);
 	if (map->move_s)
 		move_s(map);
-	test(map);
+	calcul_colonne(map);
 	mlx_put_image_to_window(map->mlx->mlx, map->mlx->windows, map->mlx->image, 0, 0);
 	return (0);
 }
 
 void change(int keycode, t_map *map)
 {
-	if (keycode == D_KEY)
+	if (keycode == ESC_KEY)
+		exit (0);
+	else if (keycode == D_KEY)
 		map->move_d = !map->move_d;
 	else if (keycode == A_KEY)
 		map->move_a = !map->move_a;

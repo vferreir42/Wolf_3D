@@ -81,7 +81,8 @@ typedef struct s_v
 void mini_map(t_map *map);
 int initialisation_map(t_map *map, char *name);
 int loop_hook(t_map *map);
-void 			test(t_map *map);
+void calcul_colonne(t_map *map);
+int			motion_hook(int x, int y, t_map *map);
 int				motion_hook(int x, int y, t_map *map);
 void			initialisation_minilibix(t_map *map);
 void			ft_put_pixel(t_mlx *mlx, int x, int y, int couleur);
