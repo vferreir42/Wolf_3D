@@ -125,10 +125,7 @@ void test(t_map *map)
 		dist_hor = distance_horizontale(&v, map, map->carte);
 		dist_ver = distance_verticale(&v, map, map->carte);
 		colonne = size_colonne(&v, dist_hor, dist_ver);
-		printf("4\n");
 		draw_colonne(&v, map, colonne, i);
-		printf("5\n");
-
 	}
-//	mini_map(map);
+	mini_map(map);
 }
