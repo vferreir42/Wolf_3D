@@ -55,6 +55,7 @@ typedef struct	s_map
 	int angle;
 	int carte_x;
 	int carte_y;
+	int move;
 	int move_d;
 	int move_a;
 	int move_w;
@@ -84,7 +85,6 @@ void 			test(t_map *map);
 int				motion_hook(int x, int y, t_map *map);
 void			initialisation_minilibix(t_map *map);
 void			ft_put_pixel(t_mlx *mlx, int x, int y, int couleur);
-void			ft_clean_image(t_map *map);
 int				my_key_funct(int keycode, t_map *map);
 int				my_mouse_funct(int keycode, int pos_x, int pos_y, t_map *map);
 void draw_colonne(t_v *v, t_map *map, int colonne, int i);

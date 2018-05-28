@@ -17,20 +17,19 @@ void draw_colonne(t_v *v, t_map *map, int colonne, int i)
 	int x;
 	int couleur;
 
-	x = 0;
+	x = -1;
 	if (v->up == 1)
 		couleur = 0xFFFFFF;
-	if (v->bottom == 1)
+	else if (v->bottom == 1)
 		couleur = 0xFFFF00;
-	if (v->right == 1)
+	else if (v->right == 1)
 		couleur = 0xA4405B;
-	if (v->left == 1)
+	else if (v->left == 1)
 		couleur = 0xA44000;
-	while (x < colonne / 2)
+	while (++x < colonne / 2 && x < SCREEN_HEIGHT)
 	{
 		ft_put_pixel(map->mlx, i, SCREEN_HEIGHT / 2 + x + map->hauteur, couleur);
 		ft_put_pixel(map->mlx, i, SCREEN_HEIGHT / 2 - x + map->hauteur, couleur);
-		x++;
 	}
 	while (x < SCREEN_HEIGHT)
 	{

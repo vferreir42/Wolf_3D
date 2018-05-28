@@ -21,7 +21,6 @@ int			motion_hook(int x, int y, t_map *map)
 		x = x / 200;
 		map->angle += x;
 		map->hauteur = y;
-		ft_clean_image(map);
 		test(map);
 		mlx_put_image_to_window(map->mlx->mlx, map->mlx->windows, map->mlx->image, 0, 0);
 	}
