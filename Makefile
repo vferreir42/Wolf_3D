@@ -14,6 +14,7 @@ NAME	=	./wolf3d
 
 SRCS	=	./srcs/main.c 						\
 				./srcs/mlx.c							\
+				./srcs/texture.c			\
 				./srcs/key_fonction.c			\
 				./srcs/display.c					\
 				./srcs/calcul.c						\
@@ -23,7 +24,7 @@ SRCS	=	./srcs/main.c 						\
 
 OBJS	=	$(SRCS:.c=.o)
 
-CC	=	@gcc
+CC	=	@clang
 
 CFLAGS	=	-I ./libft/includes -I ./includes -I ./minilibx_macos
 

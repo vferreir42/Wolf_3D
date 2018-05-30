@@ -45,15 +45,32 @@ typedef struct	s_mlx
 	int		size_line;
 }		t_mlx;
 
+typedef struct		s_image
+{
+	void		*image;
+	char		*data;
+	int			size_line;
+	int			bpp;
+	int			endian;
+	int			width;
+	int			height;
+}					t_image;
+
 typedef struct	s_map
 {
 	t_mlx	*mlx;
+	t_image *texture[4];
 	int	key_hook[300];
 	char	**carte;
 	double	pos_x;
 	double	pos_y;
+	int mode;
+	int tex;
 	int	hauteur;
 	int	angle;
+	int offset_hor;
+	int offset_ver;
+	int offset;
 	int	carte_x;
 	int	carte_y;
 	int	move_a;
@@ -71,10 +88,6 @@ typedef struct s_v
 	double	pos_y;
 	double	step_x;
 	double	step_y;
-	int	up;
-	int	bottom;
-	int	right;
-	int	left;
 }		t_v;
 
 typedef struct s_lst
@@ -85,8 +98,10 @@ typedef struct s_lst
 
 void	mini_map(t_map *map);
 int	initialisation_map(t_map *map, char *name);
-void	initialisation_minilibix(t_map *map);
+void initialisation_minilibix(t_map *map);
+void initialisation_texture(t_map *map);
 
+int ft_take_pixel(t_image *img, int x, int y, int dist);
 void	calcul_colonne(t_map *map);
 void	draw_colonne(t_v *v, t_map *map, int colonne, int i);
 

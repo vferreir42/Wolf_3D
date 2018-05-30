@@ -75,6 +75,12 @@ void change(int keycode, t_map *map)
 		map->move_w = !map->move_w;
 	else if (keycode == S_KEY)
 		map->move_s = !map->move_s;
+	else if (keycode == K1_KEY)
+		map->mode = 1;
+	else if (keycode == K2_KEY)
+		map->mode = 2;
+	else if (keycode == K3_KEY)
+		map->mode = 3;
 //	else if (map->key_hook[UP_KEY])
 //		map->hauteur += 5;
 //	else if (map->key_hook[DOWN_KEY])

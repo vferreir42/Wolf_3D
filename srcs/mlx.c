@@ -34,10 +34,12 @@ void	initialisation_minilibix(t_map *map)
 {
 	if (!(map->mlx = malloc(sizeof(t_mlx))))
 		exit (0);
-	map->mlx->mlx = mlx_init();
-	map->mlx->windows = mlx_new_window(map->mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "mlx_42");
-	map->mlx->image = mlx_new_image(map->mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	map->mlx->data = mlx_get_data_addr(map->mlx->image, &map->mlx->bpp, &map->mlx->size_line, &map->mlx->endian);
+	if (!(map->mlx->mlx = mlx_init()))
+		exit (0);
+	if (!(map->mlx->windows = mlx_new_window(map->mlx->mlx,
+		SCREEN_WIDTH, SCREEN_HEIGHT, "mlx_42")))
+		exit (0);
+	map->mode = 1;
 	map->last_frame = 0;
 	map->next_frame = 0;
 	map->angle = -60;

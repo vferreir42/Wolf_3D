@@ -23,30 +23,28 @@ static double modulo_xbox(double angle)
 	return (angle);
 }
 
-static int size_colonne(t_v *v, double dist_hor, double dist_ver)
+static int size_colonne(t_map *map, t_v *v, double dist_hor, double dist_ver)
 {
-	v->up = 0;
-	v->bottom = 0;
-	v->right = 0;
-	v->left = 0;
 	if (dist_hor)
 		dist_hor = (DISTANCE * SIZE) / dist_hor;
 	if (dist_ver)
 		dist_ver = (DISTANCE * SIZE) / dist_ver;
 	if (dist_hor > dist_ver)
 	{
+		map->offset = map->offset_hor;
 		if (v->angle < 180)
-			v->up = 1;
+			map->tex = 0;
 		else
-			v->bottom = 1;
+			map->tex = 1;
 		return ((int)dist_hor);
 	}
 	else
 	{
+		map->offset = map->offset_ver;
 		if (v->angle >= 90 && v->angle <= 270)
-			v->right = 1;
+			map->tex = 2;
 		else
-			v->left = 1;
+			map->tex = 3;
 		return ((int)dist_ver);
 	}
 }
@@ -74,7 +72,11 @@ static double distance_horizontale(t_v *v, t_map *map, char **carte)
 				|| floor(x1 / 64) < 0 || floor(x1 / 64) >= map->carte_x)
 			return (0);
 		else if (carte[(int)(y1 / 64)][(int)(x1 / 64)] == '1')
-				return (fabs((map->pos_x - x1) / cos(v->angle * DEGREE)) * cos((v->angle - map->angle) * DEGREE));
+		{
+			map->offset_hor = (int)x1 % 64;
+			map->offset_hor /= 2;
+			return (fabs((map->pos_x - x1) / cos(v->angle * DEGREE)) * cos((v->angle - map->angle) * DEGREE));
+		}
 		y1 += v->step_y;
 		x1 += v->step_x;
 	}
@@ -103,7 +105,11 @@ static double distance_verticale(t_v *v, t_map *map, char **carte)
 				|| floor(x1 / 64) < 0 || floor(x1 / 64) >= map->carte_x)
 			return (0);
 		else if (carte[(int)(y1 / 64)][(int)(x1 / 64)] == '1')
+		{
+				map->offset_ver = (int)y1 % 64;
+				map->offset_ver /= 2;
 				return (fabs((map->pos_x - x1) / cos(v->angle * DEGREE)) * cos((v->angle - map->angle) * DEGREE));
+		}
 		y1 += v->step_y;
 		x1 += v->step_x;
 	}
@@ -124,7 +130,7 @@ void calcul_colonne(t_map *map)
 		v.angle = modulo_xbox(map->angle + 30 - (double)i * 60 / SCREEN_WIDTH);
 		dist_hor = distance_horizontale(&v, map, map->carte);
 		dist_ver = distance_verticale(&v, map, map->carte);
-		colonne = size_colonne(&v, dist_hor, dist_ver);
+		colonne = size_colonne(map, &v, dist_hor, dist_ver);
 		draw_colonne(&v, map, colonne, i);
 	}
 	mini_map(map);
