@@ -103,7 +103,7 @@ void initialisation_texture(t_map *map);
 
 int ft_take_pixel(t_image *img, int x, int y, int dist);
 void	calcul_colonne(t_map *map);
-void	draw_colonne(t_v *v, t_map *map, int colonne, int i);
+void	draw_colonne(t_map *map, int colonne, int i);
 
 int	loop_hook(t_map *map);
 int	motion_hook(int x, int y, t_map *map);

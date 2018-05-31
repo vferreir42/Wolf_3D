@@ -37,7 +37,7 @@ void	initialisation_minilibix(t_map *map)
 	if (!(map->mlx->mlx = mlx_init()))
 		exit (0);
 	if (!(map->mlx->windows = mlx_new_window(map->mlx->mlx,
-		SCREEN_WIDTH, SCREEN_HEIGHT, "mlx_42")))
+		SCREEN_WIDTH, SCREEN_HEIGHT, "Wolf_3D")))
 		exit (0);
 	map->mode = 1;
 	map->last_frame = 0;

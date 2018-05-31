@@ -78,7 +78,7 @@ void mode_psychedelique(t_map *map, int colonne, int x, int tex)
 	}
 }
 
-void draw_colonne(t_v *v, t_map *map, int colonne, int x)
+void draw_colonne(t_map *map, int colonne, int x)
 {
 	if (map->mode == 1)
 		mode_normal(map, colonne, x, map->tex);

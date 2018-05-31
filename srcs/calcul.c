@@ -131,7 +131,7 @@ void calcul_colonne(t_map *map)
 		dist_hor = distance_horizontale(&v, map, map->carte);
 		dist_ver = distance_verticale(&v, map, map->carte);
 		colonne = size_colonne(map, &v, dist_hor, dist_ver);
-		draw_colonne(&v, map, colonne, i);
+		draw_colonne(map, colonne, i);
 	}
 	mini_map(map);
 }

@@ -37,13 +37,12 @@ int main(int argc, char **argv)
 	initialisation_minilibix(map);
 	initialisation_texture(map);
 
-
 	mlx_do_key_autorepeatoff(map->mlx);
 	mlx_loop_hook(map->mlx->mlx, &loop_hook, map);
 	mlx_hook(map->mlx->windows, KEYPRESS, KEYPRESSMASK, &fct_key, map);
 	mlx_hook(map->mlx->windows, MOTIONNOTIFY, POINTERMOTIONMASK, &motion_hook, map);
 	mlx_key_hook(map->mlx->windows, &my_key_funct, map);
-	
+
 	mlx_loop(map->mlx);
 	return (0);
 }

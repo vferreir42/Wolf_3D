@@ -27,7 +27,7 @@ static t_lst *new_maillon(char *str)
 	return (new);
 }
 
-static t_lst *read_map(t_map *map, t_lst *new, int fd)
+static t_lst *read_map(t_lst *new, int fd)
 {
 	t_lst *tmp;
 	char *line;
@@ -61,7 +61,7 @@ static void parsing_map(t_map *map, t_lst *new)
 	map->carte_x = ft_strlen(new->content);
 	while (new)
 	{
-		if (ft_strlen(new->content) != map->carte_x)
+		if ((int)ft_strlen(new->content) != map->carte_x)
 			exit (0);
 		i = -1;
 		while (new->content[++i])
@@ -106,7 +106,7 @@ int initialisation_map(t_map *map, char *name)
 	map->carte = NULL;
 	if ((fd = open(name, O_RDWR)) == -1)
 		exit (0);
-	if (!(new = read_map(map, new, fd)))
+	if (!(new = read_map(new, fd)))
 		exit (0);
 	parsing_map(map, new);
 	created_map(map, new);

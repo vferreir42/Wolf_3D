@@ -7,7 +7,7 @@ int ft_take_pixel(t_image *img, int x, int y, int dist)
 	int	g;
 	int	b;
 
-  if (x < 0 || y < 0 || x >= 32 || y  >= 32)
+  if (x < 0 || y < 0 || x >= 64 || y  >= 64)
     return (0x000000);
 	size = y * img->size_line + x * img->bpp / 8;
 	b = (unsigned char)img->data[size] - dist;
@@ -37,8 +37,8 @@ static t_image *load_image(t_mlx *mlx, char *name)
 
 void initialisation_texture(t_map *map)
 {
-  map->texture[0] = load_image(map->mlx, "./texture/metal.xpm");
-	map->texture[1] = load_image(map->mlx, "./texture/brick.xpm");
+  map->texture[0] = load_image(map->mlx, "./texture/zidane.xpm");
+	map->texture[1] = load_image(map->mlx, "./texture/titi.xpm");
 	map->texture[2] = load_image(map->mlx, "./texture/stone.xpm");
 	map->texture[3] = load_image(map->mlx, "./texture/wood.xpm");
 	if (!(map->mlx->image = mlx_new_image(map->mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT)))
