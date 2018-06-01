@@ -29,7 +29,7 @@ int	main(int argc, char **argv)
 	map = NULL;
 	if (argc != 2 || !argv[1])
 	{
-		printf("usage: ./wolf_3D <name_map>\n");
+		write(1, "usage: ./wolf_3D <name_map>\n", 28);
 		return (-1);
 	}
 	if (!(map = malloc(sizeof(t_map))))

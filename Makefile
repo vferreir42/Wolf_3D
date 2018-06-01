@@ -20,10 +20,9 @@ SRCS	=	./srcs/main.c 						\
 				./srcs/read_map.c					\
 				./srcs/mini_map.c
 
-
 OBJS	=	$(SRCS:.c=.o)
 
-CC	=	@clang -Wall -Wextra -Werror -fsanitize=address
+CC	=	@clang -Wall -Wextra -Werror
 
 CFLAGS	=	-I ./libft/includes -I ./includes -I ./minilibx_macos
 
@@ -34,15 +33,16 @@ RM	=	/bin/rm -f
 all	:	$(NAME)
 
 $(NAME)	:	$(OBJS)
+	@make -C libft
 	@$(CC) $(OBJS) $(LIB_PATH) -o $(NAME) -framework OpenGL -framework AppKit
 	@echo "\033[32mWOLF 3D COMPILATING DONE\033[0m"
-	@$(RM) $(OBJS)
 
 clean	:
-
+	@make clean -C libft
 	@$(RM) $(OBJS)
 
 fclean	:
+	@make fclean -C libft
 	@$(RM) $(OBJS)
 	@$(RM) $(NAME)
 	@echo "\033[31mWOLF 3D CLEANING DONE"
