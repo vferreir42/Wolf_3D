@@ -27,7 +27,7 @@ void	mode_normal(t_map *map, int col, int x, int tex)
 	{
 		if (y < var)
 			ft_put_pixel(map->mlx, x, y, 0x00BFFF);
-		else if (y > SCREEN_HEIGHT - var)
+		else if (y >= SCREEN_HEIGHT - var)
 			ft_put_pixel(map->mlx, x, y, 0xB3B191);
 		else
 		{

@@ -85,6 +85,7 @@ typedef struct	s_v
 	double		pos_y;
 	double		step_x;
 	double		step_y;
+	double		rest;
 }				t_v;
 
 typedef struct	s_lst

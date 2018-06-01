@@ -107,7 +107,8 @@ void			calcul_colonne(t_map *map)
 	while (++i < SCREEN_WIDTH)
 	{
 		v.angle = map->angle + 30 - (double)i * 60 / SCREEN_WIDTH;
-		v.angle -= (v.angle >= 360) ? 360 : 0;
+		v.rest = v.angle - (int)v.angle;
+		v.angle = (int)v.angle % 360 + v.rest;
 		v.angle += (v.angle < 0) ? 360 : 0;
 		dist_hor = distance_horizontale(&v, map, map->carte);
 		dist_ver = distance_verticale(&v, map, map->carte);
