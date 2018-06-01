@@ -6,84 +6,88 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:55:17 by vferreir          #+#    #+#             */
-/*   Updated: 2018/05/04 17:56:50 by vferreir         ###   ########.fr       */
+/*   Updated: 2018/06/01 17:02:00 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void mode_normal(t_map *map, int colonne, int x, int tex)
+void	mode_normal(t_map *map, int col, int x, int tex)
 {
-	int y;
-	int start;
-	int couleur;
-	double diviseur;
+	double		diviseur;
+	int			t;
+	int			y;
+	int			var;
 
-	if (colonne >= SCREEN_HEIGHT)
-		colonne = SCREEN_HEIGHT - 1;
-	diviseur = (double)colonne / 32;
-	start = SCREEN_HEIGHT / 2 - colonne / 2;
+	diviseur = (double)col / 32;
+	var = (SCREEN_HEIGHT - col) / 2;
+	t = (col > SCREEN_HEIGHT) ? (col - SCREEN_HEIGHT) / 2 : 0;
 	y = -1;
-	while (++y < colonne)
-	{
-		couleur = ft_take_pixel(map->texture[tex], map->offset, y / diviseur, 0);
-		ft_put_pixel(map->mlx, x, start, couleur);
-		start++;
-	}
-	y = start - 1;
 	while (++y < SCREEN_HEIGHT)
 	{
-		ft_put_pixel(map->mlx, x, y, 0xB3B191);
-		ft_put_pixel(map->mlx, x, SCREEN_HEIGHT - y, 0x00BFFF);
+		if (y < var)
+			ft_put_pixel(map->mlx, x, y, 0x00BFFF);
+		else if (y > SCREEN_HEIGHT - var)
+			ft_put_pixel(map->mlx, x, y, 0xB3B191);
+		else
+		{
+			ft_put_pixel(map->mlx, x, y, ft_take_pixel(map->texture[tex],
+						map->offset, t / diviseur, 0));
+			t++;
+		}
 	}
 }
 
-void mode_couleur(t_map *map, int colonne, int x, int tex)
+void	mode_couleur(t_map *map, int col, int x, int tex)
 {
-	int couleur[4] = {0x00FFFF, 0xFFFF00, 0xA4405B, 0xA44000};
+	int couleur[4];
+	int y;
+	int var;
+
+	couleur[0] = 0x00FFFF;
+	couleur[1] = 0xFFFF00;
+	couleur[2] = 0xA4405B;
+	couleur[3] = 0xA44000;
+	var = (SCREEN_HEIGHT - col) / 2;
+	y = -1;
+	while (++y < SCREEN_HEIGHT)
+	{
+		if (y < var)
+			ft_put_pixel(map->mlx, x, y, 0x00BFFF);
+		else if (y > SCREEN_HEIGHT - var)
+			ft_put_pixel(map->mlx, x, y, 0xB3B191);
+		else
+			ft_put_pixel(map->mlx, x, y, couleur[tex]);
+	}
+}
+
+void	mode_psychedelique(t_map *map, int col, int x, int tex)
+{
+	int couleur[4];
 	int y;
 	int start;
 
-	if (colonne >= SCREEN_HEIGHT)
-		colonne = SCREEN_HEIGHT - 1;
-	start = SCREEN_HEIGHT / 2 - colonne / 2;
+	couleur[0] = 0x00FFFF;
+	couleur[1] = 0xFFFF00;
+	couleur[2] = 0xA4405B;
+	couleur[3] = 0xA44000;
+	if (col >= SCREEN_HEIGHT)
+		col = SCREEN_HEIGHT - 1;
+	start = SCREEN_HEIGHT / 2 - col / 2;
 	y = -1;
-	while (++y < colonne)
+	while (++y < col)
 	{
 		ft_put_pixel(map->mlx, x, start, couleur[tex]);
 		start++;
 	}
-	y = start - 1;
-	while (++y < SCREEN_HEIGHT)
-	{
-		ft_put_pixel(map->mlx, x, y, 0xB3B191);
-		ft_put_pixel(map->mlx, x, SCREEN_HEIGHT - y, 0x00BFFF);
-	}
 }
 
-void mode_psychedelique(t_map *map, int colonne, int x, int tex)
-{
-	int couleur[4] = {0x00FFFF, 0xFFFF00, 0xA4405B, 0xA44000};
-	int y;
-	int start;
-
-	if (colonne >= SCREEN_HEIGHT)
-		colonne = SCREEN_HEIGHT - 1;
-	start = SCREEN_HEIGHT / 2 - colonne / 2;
-	y = -1;
-	while (++y < colonne)
-	{
-		ft_put_pixel(map->mlx, x, start, couleur[tex]);
-		start++;
-	}
-}
-
-void draw_colonne(t_map *map, int colonne, int x)
+void	draw_colonne(t_map *map, int col, int x)
 {
 	if (map->mode == 1)
-		mode_normal(map, colonne, x, map->tex);
+		mode_normal(map, col, x, map->tex);
 	else if (map->mode == 2)
-		mode_couleur(map, colonne, x, map->tex);
+		mode_couleur(map, col, x, map->tex);
 	else if (map->mode == 3)
-		mode_psychedelique(map, colonne, x, map->tex);
+		mode_psychedelique(map, col, x, map->tex);
 }

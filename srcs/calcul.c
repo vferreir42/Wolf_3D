@@ -6,24 +6,13 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 18:19:08 by vferreir          #+#    #+#             */
-/*   Updated: 2018/05/04 17:57:09 by vferreir         ###   ########.fr       */
+/*   Updated: 2018/06/01 17:11:16 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-static double modulo_xbox(double angle)
-{
-	double rest;
-
-	rest = angle - (int)angle;
-	angle = (int)angle % 360 + rest;
-	if (angle < 0)
-		angle += 360;
-	return (angle);
-}
-
-static int size_colonne(t_map *map, t_v *v, double dist_hor, double dist_ver)
+static int		size_col(t_map *map, t_v *v, double dist_hor, double dist_ver)
 {
 	if (dist_hor)
 		dist_hor = (DISTANCE * SIZE) / dist_hor;
@@ -49,21 +38,14 @@ static int size_colonne(t_map *map, t_v *v, double dist_hor, double dist_ver)
 	}
 }
 
-static double distance_horizontale(t_v *v, t_map *map, char **carte)
+static double	distance_horizontale(t_v *v, t_map *map, char **carte)
 {
 	double x1;
 	double y1;
 
-	if (v->angle >= 0 && v->angle <= 180)
-	{
-		y1 = (floor(map->pos_y / SIZE) * 64) - 0.0001;
-		v->step_y = -64;
-	}
-	else
-	{
-		y1 = (floor(map->pos_y / SIZE) * 64) + 64;
-		v->step_y = 64;
-	}
+	y1 = (v->angle >= 0 && v->angle <= 180) ? (floor(map->pos_y / SIZE)
+	* 64) - 0.0001 : (floor(map->pos_y / SIZE) * 64) + 64;
+	v->step_y = (v->angle >= 0 && v->angle <= 180) ? -64 : 64;
 	v->step_x = -v->step_y / tan(v->angle * DEGREE);
 	x1 = map->pos_x + (map->pos_y - y1) / tan(v->angle * DEGREE);
 	while (1)
@@ -75,28 +57,22 @@ static double distance_horizontale(t_v *v, t_map *map, char **carte)
 		{
 			map->offset_hor = (int)x1 % 64;
 			map->offset_hor /= 2;
-			return (fabs((map->pos_x - x1) / cos(v->angle * DEGREE)) * cos((v->angle - map->angle) * DEGREE));
+			return (fabs((map->pos_x - x1) / cos(v->angle * DEGREE))
+			* cos((v->angle - map->angle) * DEGREE));
 		}
 		y1 += v->step_y;
 		x1 += v->step_x;
 	}
 }
 
-static double distance_verticale(t_v *v, t_map *map, char **carte)
+static double	distance_verticale(t_v *v, t_map *map, char **carte)
 {
 	double x1;
 	double y1;
 
-	if (v->angle >= 90 && v->angle <= 270)
-	{
-		x1 = (floor(map->pos_x / SIZE) * 64) - 0.0001;
-		v->step_x = -64;
-	}
-	else
-	{
-		x1 = (floor(map->pos_x / SIZE) * 64) + 64;
-		v->step_x = 64;
-	}
+	x1 = (v->angle >= 90 && v->angle <= 270) ? ((floor(map->pos_x / SIZE)
+	* 64) - 0.0001) : ((floor(map->pos_x / SIZE) * 64) + 64);
+	v->step_x = (v->angle >= 90 && v->angle <= 270) ? -64 : 64;
 	v->step_y = -v->step_x * tan(v->angle * DEGREE);
 	y1 = map->pos_y + (map->pos_x - x1) * tan(v->angle * DEGREE);
 	while (1)
@@ -106,31 +82,36 @@ static double distance_verticale(t_v *v, t_map *map, char **carte)
 			return (0);
 		else if (carte[(int)(y1 / 64)][(int)(x1 / 64)] == '1')
 		{
-				map->offset_ver = (int)y1 % 64;
-				map->offset_ver /= 2;
-				return (fabs((map->pos_x - x1) / cos(v->angle * DEGREE)) * cos((v->angle - map->angle) * DEGREE));
+			map->offset_ver = (int)y1 % 64;
+			map->offset_ver /= 2;
+			return (fabs((map->pos_x - x1) / cos(v->angle * DEGREE))
+			* cos((v->angle - map->angle) * DEGREE));
 		}
 		y1 += v->step_y;
 		x1 += v->step_x;
 	}
 }
 
-void calcul_colonne(t_map *map)
+void			calcul_colonne(t_map *map)
 {
-	t_v v;
-	int i;
-	int colonne;
-	double dist_hor = -1;
-	double dist_ver = -1;
+	t_v		v;
+	int		i;
+	int		colonne;
+	double	dist_hor;
+	double	dist_ver;
 
+	dist_hor = -1;
+	dist_ver = -1;
 	map->angle %= 360;
 	i = -1;
 	while (++i < SCREEN_WIDTH)
 	{
-		v.angle = modulo_xbox(map->angle + 30 - (double)i * 60 / SCREEN_WIDTH);
+		v.angle = map->angle + 30 - (double)i * 60 / SCREEN_WIDTH;
+		v.angle -= (v.angle >= 360) ? 360 : 0;
+		v.angle += (v.angle < 0) ? 360 : 0;
 		dist_hor = distance_horizontale(&v, map, map->carte);
 		dist_ver = distance_verticale(&v, map, map->carte);
-		colonne = size_colonne(map, &v, dist_hor, dist_ver);
+		colonne = size_col(map, &v, dist_hor, dist_ver);
 		draw_colonne(map, colonne, i);
 	}
 	mini_map(map);

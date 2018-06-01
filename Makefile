@@ -14,17 +14,16 @@ NAME	=	./wolf3d
 
 SRCS	=	./srcs/main.c 						\
 				./srcs/mlx.c							\
-				./srcs/texture.c			\
 				./srcs/key_fonction.c			\
 				./srcs/display.c					\
 				./srcs/calcul.c						\
-				./srcs/initialisation_map.c					\
+				./srcs/read_map.c					\
 				./srcs/mini_map.c
 
 
 OBJS	=	$(SRCS:.c=.o)
 
-CC	=	@clang -Wall -Werror -Wextra
+CC	=	@clang -Wall -Wextra -Werror -fsanitize=address
 
 CFLAGS	=	-I ./libft/includes -I ./includes -I ./minilibx_macos
 
