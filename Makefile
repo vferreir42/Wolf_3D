@@ -22,7 +22,7 @@ SRCS	=	./srcs/main.c 						\
 
 OBJS	=	$(SRCS:.c=.o)
 
-CC	=	@clang
+CC	=	@clang -Wall -Werror -Wextra
 
 CFLAGS	=	-I ./libft/includes -I ./includes -I ./minilibx_macos
 
@@ -34,15 +34,18 @@ all	:	$(NAME)
 
 $(NAME)	:	$(OBJS)
 	@make -C libft
+	@make -C minilibx_macos
 	@$(CC) $(OBJS) $(LIB_PATH) -o $(NAME) -framework OpenGL -framework AppKit
 	@echo "\033[32mWOLF 3D COMPILATING DONE\033[0m"
 
 clean	:
 	@make clean -C libft
+	@make clean -C minilibx_macos
 	@$(RM) $(OBJS)
 
 fclean	:
 	@make fclean -C libft
+	@make clean -C minilibx_macos
 	@$(RM) $(OBJS)
 	@$(RM) $(NAME)
 	@echo "\033[31mWOLF 3D CLEANING DONE"

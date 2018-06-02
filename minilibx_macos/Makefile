@@ -12,7 +12,7 @@ all: $(NOM)
 $(NOM):	$(OBJ)
 	@ar -r $(NOM) $(OBJ)
 	@ranlib $(NOM)
-	@echo "\033[31mMINILIBX COMPILATING DONE"
+	@echo "\032[33mMINILIBX COMPILATING DONE"
 
 clean:
 	@rm -f $(NOM) $(OBJ) *~
