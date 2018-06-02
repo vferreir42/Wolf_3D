@@ -49,6 +49,7 @@ static t_lst	*read_map(t_lst *new, int fd)
 		}
 		ft_strdel(&line);
 	}
+	ft_strdel(&line);
 	return (new);
 }
 
@@ -66,7 +67,7 @@ static void		parsing_map(t_map *map, t_lst *new)
 		i = -1;
 		while (new->content[++i])
 		{
-			if (new->content[i] != '0' && new->content[i] != '1')
+			if (new->content[i] < '0' || new->content[i] > '2')
 				exit(0);
 		}
 		count++;
@@ -104,7 +105,7 @@ int				initialisation_map(t_map *map, char *name)
 
 	new = NULL;
 	map->carte = NULL;
-	if ((fd = open(name, O_RDWR)) == -1)
+	if ((fd = open(name, O_RDONLY)) == -1)
 		exit(0);
 	if (!(new = read_map(new, fd)))
 		exit(0);
@@ -121,5 +122,6 @@ int				initialisation_map(t_map *map, char *name)
 	}
 	else
 		exit(0);
+	close(fd);
 	return (0);
 }

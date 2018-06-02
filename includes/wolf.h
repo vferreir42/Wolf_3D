@@ -6,7 +6,7 @@
 /*   By: vferreir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 16:04:36 by vferreir          #+#    #+#             */
-/*   Updated: 2018/06/01 17:39:47 by vferreir         ###   ########.fr       */
+/*   Updated: 2018/06/02 16:01:21 by vferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,14 @@ typedef struct	s_image
 typedef struct	s_map
 {
 	t_mlx		*mlx;
-	t_image		*texture[4];
+	t_image		*texture[5];
 	int			key_hook[300];
 	char		**carte;
 	double		pos_x;
 	double		pos_y;
+	int			enn;
+	int			e_h;
+	int			e_v;
 	int			mode;
 	int			tex;
 	int			hauteur;

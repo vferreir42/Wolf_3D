@@ -20,6 +20,7 @@ static int		size_col(t_map *map, t_v *v, double dist_hor, double dist_ver)
 		dist_ver = (DISTANCE * SIZE) / dist_ver;
 	if (dist_hor > dist_ver)
 	{
+		map->enn = map->e_h;
 		map->offset = map->offset_hor;
 		if (v->angle < 180)
 			map->tex = 0;
@@ -29,6 +30,7 @@ static int		size_col(t_map *map, t_v *v, double dist_hor, double dist_ver)
 	}
 	else
 	{
+		map->enn = map->e_v;
 		map->offset = map->offset_ver;
 		if (v->angle >= 90 && v->angle <= 270)
 			map->tex = 2;
@@ -53,10 +55,11 @@ static double	distance_horizontale(t_v *v, t_map *map, char **carte)
 		if (floor(y1 / 64) < 0 || floor(y1 / 64) >= map->carte_y
 				|| floor(x1 / 64) < 0 || floor(x1 / 64) >= map->carte_x)
 			return (0);
-		else if (carte[(int)(y1 / 64)][(int)(x1 / 64)] == '1')
+		else if (carte[(int)(y1 / 64)][(int)(x1 / 64)] > '0')
 		{
 			map->offset_hor = (int)x1 % 64;
 			map->offset_hor /= 2;
+			map->e_h = (carte[(int)(y1 / 64)][(int)(x1 / 64)] == '1') ? 0 : 1;
 			return (fabs((map->pos_x - x1) / cos(v->angle * DEGREE))
 			* cos((v->angle - map->angle) * DEGREE));
 		}
@@ -80,10 +83,11 @@ static double	distance_verticale(t_v *v, t_map *map, char **carte)
 		if (floor(y1 / 64) < 0 || floor(y1 / 64) >= map->carte_y
 				|| floor(x1 / 64) < 0 || floor(x1 / 64) >= map->carte_x)
 			return (0);
-		else if (carte[(int)(y1 / 64)][(int)(x1 / 64)] == '1')
+		else if (carte[(int)(y1 / 64)][(int)(x1 / 64)] > '0')
 		{
 			map->offset_ver = (int)y1 % 64;
 			map->offset_ver /= 2;
+			map->e_v = (carte[(int)(y1 / 64)][(int)(x1 / 64)] == '1') ? 0 : 1;
 			return (fabs((map->pos_x - x1) / cos(v->angle * DEGREE))
 			* cos((v->angle - map->angle) * DEGREE));
 		}

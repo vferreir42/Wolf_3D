@@ -22,7 +22,7 @@ SRCS	=	./srcs/main.c 						\
 
 OBJS	=	$(SRCS:.c=.o)
 
-CC	=	@clang -Wall -Wextra -Werror
+CC	=	@clang
 
 CFLAGS	=	-I ./libft/includes -I ./includes -I ./minilibx_macos
 

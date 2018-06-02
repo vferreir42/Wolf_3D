@@ -99,7 +99,7 @@ void	mini_map(t_map *map)
 			{
 				x++;
 				if (x >= 0 && x < map->carte_x
-						&& j < map->carte_y && map->carte[j][x] == '1')
+						&& j < map->carte_y && map->carte[j][x] >= '1')
 					print(map, count_j * 16, count_x * 16);
 			}
 		}

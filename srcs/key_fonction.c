@@ -51,7 +51,7 @@ int		loop_hook(t_map *map)
 	map->last_frame = clock();
 	if (map->next_frame > map->last_frame)
 		return (0);
-	map->next_frame = map->last_frame + (CLOCKS_PER_SEC / 25);
+	map->next_frame = map->last_frame + (CLOCKS_PER_SEC / 45);
 	if (map->move_a)
 		map->angle += ROTATION;
 	if (map->move_d)

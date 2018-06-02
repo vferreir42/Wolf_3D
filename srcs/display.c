@@ -19,6 +19,7 @@ void	mode_normal(t_map *map, int col, int x, int tex)
 	int			y;
 	int			var;
 
+	tex = (map->enn) ? 4 : tex;
 	diviseur = (double)col / 32;
 	var = (SCREEN_HEIGHT - col) / 2;
 	t = (col > SCREEN_HEIGHT) ? (col - SCREEN_HEIGHT) / 2 : 0;

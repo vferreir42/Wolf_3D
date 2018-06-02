@@ -67,10 +67,11 @@ static t_image	*load_image(t_mlx *mlx, char *name)
 
 void			initialisation_texture(t_map *map)
 {
-	map->texture[0] = load_image(map->mlx, "./texture/zidane.xpm");
+	map->texture[0] = load_image(map->mlx, "./texture/stone.xpm");
 	map->texture[1] = load_image(map->mlx, "./texture/brick.xpm");
 	map->texture[2] = load_image(map->mlx, "./texture/metal.xpm");
 	map->texture[3] = load_image(map->mlx, "./texture/wood.xpm");
+	map->texture[4] = load_image(map->mlx, "./texture/zidane.xpm");
 	if (!(map->mlx->image = mlx_new_image(map->mlx->mlx,
 		SCREEN_WIDTH, SCREEN_HEIGHT)))
 		exit(0);
@@ -89,6 +90,9 @@ void			initialisation_minilibix(t_map *map)
 	if (!(map->mlx->windows = mlx_new_window(map->mlx->mlx,
 					SCREEN_WIDTH, SCREEN_HEIGHT, "Wolf_3D")))
 		exit(0);
+	map->enn = 0;
+	map->e_h = 0;
+	map->e_v = 0;
 	map->mode = 1;
 	map->last_frame = 0;
 	map->next_frame = 0;
